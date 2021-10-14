@@ -12,11 +12,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 use Automattic\Jetpack\Admin_UI\Admin_Menu;
 use Automattic\Jetpack\Connection\Manager as Connection_Manager;
 use Automattic\Jetpack\Connection\Rest_Authentication as Connection_Rest_Authentication;
+use Automattic\Jetpack\Status;
 
 /**
  * Class Jetpack_Backup
  */
 class Jetpack_Backup {
+
 	/**
 	 * Constructor.
 	 */
@@ -83,6 +85,8 @@ class Jetpack_Backup {
 	 */
 	public function enqueue_admin_scripts() {
 		$build_assets = require_once JETPACK_BACKUP_PLUGIN_DIR . '/build/index.asset.php';
+		$status       = new Status();
+		$manager      = new Connection_Manager( 'jetpack-backup' );
 
 		// Main JS file.
 		wp_register_script(
@@ -112,6 +116,11 @@ class Jetpack_Backup {
 			'rtl',
 			plugins_url( 'build/index.rtl.css', JETPACK_BACKUP_PLUGIN_ROOT_FILE )
 		);
+
+		// Load script for analytics.
+		if ( ! $status->is_offline_mode() && $manager->is_connected() ) {
+			wp_enqueue_script( 'jp-tracks', '//stats.wp.com/w.js', array(), gmdate( 'YW' ), true );
+		}
 	}
 
 	/**
