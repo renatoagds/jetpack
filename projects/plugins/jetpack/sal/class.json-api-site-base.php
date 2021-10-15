@@ -724,4 +724,14 @@ abstract class SAL_Site {
 	public function get_anchor_podcast() {
 		return get_option( 'anchor_podcast' );
 	}
+
+	/**
+	 * Check if the site is currently being built by the DIFM Lite team.
+	 */
+	public function is_difm_lite_in_progress() {
+		if ( function_exists( 'has_blog_sticker' ) ) {
+			return has_blog_sticker( 'difm-lite-in-progress' );
+		}
+		return false;
+	}
 }
