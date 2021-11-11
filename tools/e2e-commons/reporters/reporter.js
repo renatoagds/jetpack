@@ -1,5 +1,5 @@
 import { Status } from 'jest-circus-allure-environment';
-const logger = require( '../logger' );
+import logger from '../logger.cjs';
 
 export const testStep = async ( stepName, fn ) => {
 	logger.step( `Step: ${ stepName }` );

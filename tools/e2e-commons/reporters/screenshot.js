@@ -1,9 +1,9 @@
-const path = require( 'path' );
-const config = require( 'config' );
-const logger = require( '../logger' );
-const fs = require( 'fs' );
-const { ContentType } = require( 'jest-circus-allure-environment' );
-const { fileNameFormatter } = require( '../helpers/utils-helper' );
+import path from "path";
+import config from "config";
+import logger from "../logger.cjs";
+import fs from "fs";
+import {ContentType} from "jest-circus-allure-environment";
+import {fileNameFormatter} from "../helpers/utils-helper.js";
 
 /**
  * Takes a screenshot of the given page
@@ -13,7 +13,7 @@ const { fileNameFormatter } = require( '../helpers/utils-helper' );
  * @param {Object} allure   instance of allure reporter
  * @return {Promise<void>}
  */
-async function takeScreenshot( page, fileName, allure ) {
+export async function takeScreenshot( page, fileName, allure ) {
 	let filePath;
 
 	try {
@@ -33,5 +33,3 @@ async function takeScreenshot( page, fileName, allure ) {
 
 	return filePath;
 }
-
-module.exports = { takeScreenshot };

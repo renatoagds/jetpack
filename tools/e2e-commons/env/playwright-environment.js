@@ -1,24 +1,23 @@
-const { chromium } = require( 'playwright' );
-const os = require( 'os' );
-const fs = require( 'fs' );
-const path = require( 'path' );
-const chalk = require( 'chalk' );
-const logger = require( '../logger' );
-const pwConfig = require( `${ path.resolve( process.env.NODE_CONFIG_DIR ) }/playwright.config` );
-const {
-	fileNameFormatter,
-	resolveSiteUrl,
-	getJetpackVersion,
-} = require( '../helpers/utils-helper' );
-const { takeScreenshot } = require( '../reporters/screenshot' );
-const config = require( 'config' );
-const { ContentType } = require( 'jest-circus-allure-environment' );
-const AllureNodeEnvironment = require( 'jest-circus-allure-environment' ).default;
-const { E2E_DEBUG, PAUSE_ON_FAILURE } = process.env;
+import { chromium } from 'playwright';
+import os from 'os';
+import fs from 'fs';
+import path from 'path';
+import chalk from 'chalk';
+import logger from '../logger.cjs';
+import { fileNameFormatter, getJetpackVersion, resolveSiteUrl } from '../helpers/utils-helper.js';
+import { takeScreenshot } from '../reporters/index.js';
+import config from 'config';
+import { createRequire } from 'module';
+import AllureNodeEnvironment, { ContentType } from 'jest-circus-allure-environment';
 
+const require = createRequire( import.meta.url );
+const pwConfig = require( `${ path.resolve(
+	process.env.NODE_CONFIG_DIR
+) }/playwright.config.cjs` );
+const { E2E_DEBUG, PAUSE_ON_FAILURE } = process.env;
 const TMP_DIR = path.join( os.tmpdir(), 'jest_playwright_global_setup' );
 
-class PlaywrightEnvironment extends AllureNodeEnvironment {
+export default class PlaywrightEnvironment extends AllureNodeEnvironment {
 	async setup() {
 		await super.setup();
 
@@ -59,6 +58,8 @@ class PlaywrightEnvironment extends AllureNodeEnvironment {
 		} else {
 			eventName = event.name;
 		}
+
+		console.log( event );
 
 		switch ( event.name ) {
 			case 'test_start':
@@ -108,10 +109,6 @@ class PlaywrightEnvironment extends AllureNodeEnvironment {
 		// allure reporter closes the tests events in super method and this need to happen
 		// after we close pages and save the videos or other resources we need attached
 		await super.handleTestEvent( event, state );
-	}
-
-	getVmContext() {
-		return super.getVmContext();
 	}
 
 	async newContext() {
@@ -249,5 +246,3 @@ class PlaywrightEnvironment extends AllureNodeEnvironment {
 		}
 	}
 }
-
-module.exports = PlaywrightEnvironment;

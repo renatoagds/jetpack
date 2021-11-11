@@ -1,4 +1,4 @@
-import logger from '../logger';
+import logger from '../logger.cjs';
 import { syncJetpackPlanData, loginToWpCom, loginToWpSite } from '../flows';
 import {
 	execWpCommand,
@@ -6,7 +6,7 @@ import {
 	isLocalSite,
 	provisionJetpackStartConnection,
 	resetWordpressInstall,
-} from '../helpers/utils-helper';
+} from '../helpers/utils-helper.js';
 import fs from 'fs';
 import config from 'config';
 import assert from 'assert';

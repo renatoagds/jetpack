@@ -1,14 +1,19 @@
-const { chromium } = require( 'playwright' );
-const mkdirp = require( 'mkdirp' );
-const path = require( 'path' );
-const fs = require( 'fs' );
-const os = require( 'os' );
-const config = require( 'config' );
-const pwConfig = require( `${ path.resolve( process.env.NODE_CONFIG_DIR ) }/playwright.config` );
+import { chromium } from 'playwright';
+import mkdirp from 'mkdirp';
+import path from 'path';
+import fs from 'fs';
+import os from 'os';
+import config from 'config';
+
+import { createRequire } from 'module';
+const require = createRequire( import.meta.url );
+const pwConfig = require( `${ path.resolve(
+	process.env.NODE_CONFIG_DIR
+) }/playwright.config.cjs` );
 
 const TMP_DIR = path.join( os.tmpdir(), 'jest_playwright_global_setup' );
 
-module.exports = async function () {
+export default async function () {
 	// Fail early if the required test site config is not defined
 	// Let config lib throw by using get function on an undefined property
 	if ( process.env.TEST_SITE ) {
@@ -28,4 +33,6 @@ module.exports = async function () {
 	global.browser = await chromium.launchServer( pwConfig.pwBrowserOptions );
 	mkdirp.sync( TMP_DIR );
 	fs.writeFileSync( path.join( TMP_DIR, 'wsEndpoint' ), global.browser.wsEndpoint() );
-};
+
+	console.log( 'global setup' );
+}

@@ -1,6 +1,6 @@
-const WPAPI = require( 'wpapi' );
+import WPAPI from 'wpapi';
 
-module.exports = class WordpressAPI {
+export default class WordpressAPI {
 	constructor( credentials, siteUrl ) {
 		this.authenticatedClient = WPAPI.discover( `${ siteUrl }/wp-json` ).then( function ( site ) {
 			return site.auth( { username: credentials.username, password: credentials.apiPassword } );
@@ -17,4 +17,4 @@ module.exports = class WordpressAPI {
 				console.log( err );
 			} );
 	}
-};
+}

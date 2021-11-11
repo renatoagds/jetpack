@@ -1,4 +1,3 @@
-// .eslintrc.js
 module.exports = {
 	root: true,
 	extends: [ 'plugin:@wordpress/eslint-plugin/recommended', 'plugin:jest/recommended' ],
