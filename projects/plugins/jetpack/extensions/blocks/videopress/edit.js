@@ -293,7 +293,31 @@ const VideoPressEdit = CoreVideoEdit =>
 				setAttributes,
 			} = this.props;
 			const { fallback, isFetchingMedia, isUpdatingRating, interactive, rating } = this.state;
-			const { autoplay, caption, controls, loop, muted, playsinline, poster, preload } = attributes;
+			const {
+				autoplay,
+				caption,
+				controls,
+				loop,
+				muted,
+				playsinline,
+				poster,
+				preload,
+				isVideoPressExample,
+				src,
+			} = attributes;
+
+			if ( isVideoPressExample && src ) {
+				return (
+					<Fragment>
+						<div>
+							<img src={ src } alt={ caption } />
+						</div>
+						{ ! RichText.isEmpty( caption ) && (
+							<RichText.Content tagName="figcaption" value={ caption } />
+						) }
+					</Fragment>
+				);
+			}
 
 			const videoPosterDescription = `video-block__poster-image-description-${ instanceId }`;
 
