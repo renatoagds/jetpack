@@ -239,6 +239,7 @@ importers:
 
   projects/js-packages/licensing:
     specifiers:
+      '@automattic/jetpack-api': workspace:^0.6.0
       '@automattic/jetpack-components': workspace:^0.6.2-alpha
       '@wordpress/components': 19.0.1
       '@wordpress/element': 4.0.3
@@ -249,6 +250,7 @@ importers:
       react: 17.0.2
       react-test-renderer: 17.0.2
     dependencies:
+      '@automattic/jetpack-api': link:../api
       '@automattic/jetpack-components': link:../components
       '@wordpress/components': 19.0.1_react@17.0.2
       '@wordpress/element': 4.0.3
