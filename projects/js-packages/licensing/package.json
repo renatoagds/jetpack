@@ -31,12 +31,13 @@
 		"./action-types": "./src/state/action-types"
 	},
 	"dependencies": {
+		"@automattic/jetpack-api": "workspace:^0.6.0",		
 		"@automattic/jetpack-components": "workspace:^0.6.2-alpha",
-		"@wordpress/i18n": "4.2.3",
 		"@wordpress/element": "4.0.3",
-		"jetpack-js-test-runner": "workspace:*",
-		"prop-types": "^15.7.2",
 		"@wordpress/components": "19.0.1",
-		"@wordpress/icons": "6.1.0"
+		"@wordpress/icons": "6.1.0",
+		"@wordpress/i18n": "4.2.3",
+		"jetpack-js-test-runner": "workspace:*",
+		"prop-types": "^15.7.2"
 	}
 }
