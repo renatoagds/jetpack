@@ -110,7 +110,11 @@ const hideCoreVideoPressEmbed = settings => {
 
 const addVideoPressSupport = ( settings, name ) => {
 	if ( 'core/embed' === name ) {
-		hideCoreVideoPressEmbed( settings );
+		// If VideoPress is not available, don't modify the core blocks.
+		const { available } = getJetpackExtensionAvailability( 'videopress' );
+		if ( available ) {
+			hideCoreVideoPressEmbed( settings );
+		}
 		return settings;
 	}
 
@@ -133,7 +137,7 @@ const addVideoPressSupport = ( settings, name ) => {
 			`jetpack/videopress-with-has-warning-is-interactive-class-names`,
 			withHasWarningIsInteractiveClassNames( `core/video` )
 		);
-	} else {
+	} else if ( available ) {
 		// If VideoPress is available, we update the block description and example with VideoPress-specific content.
 		settings.description = __(
 			'Embed a video from your media library or upload a new one with VideoPress.',
